@@ -1,5 +1,7 @@
 package com.company;
 
+
+import java.awt.*;
 import java.io.*;
 
 public class Decrypt {
@@ -9,7 +11,7 @@ public class Decrypt {
     Decrypt(String filename){
         this.filename = filename;
     }
-    public void getFromFile(){
+    protected void getFromFile(){
         try {
             FileReader fr = new FileReader(filename);
             BufferedReader br = new BufferedReader(fr);
@@ -25,7 +27,7 @@ public class Decrypt {
             System.out.println("Cant get content out from the file " + filename);
             }
     }
-    public String getEncrypted(){
+    protected String getEncrypted(){
         String decrypted = "";
         try{
             FileReader fr = new FileReader(filename);
@@ -36,8 +38,17 @@ public class Decrypt {
         }
         return decrypted;
     }
-    public String getDecypted(){
+    protected String getDecypted(){
         getFromFile();
         return decrypted;
+    }
+    protected void openEncryptionFile(){
+        Desktop desktop = Desktop.getDesktop();
+        File file = new File(filename);
+        try {
+            desktop.open(file);
+        }catch (IOException e){
+            System.out.println("Can't open \"Encryption.txt\" file");
+        }
     }
 }

@@ -13,6 +13,7 @@ public class Encrypt {
         encrypt();
     }
     private void encrypt(){
+        linesChecker();
         generateKey();
         char[] arrayOfChars = new char[message.length()];
         for(int i = 0; i < message.length(); ++i){
@@ -39,5 +40,27 @@ public class Encrypt {
 
     private void generateKey(){
         KEY = (new Random().nextInt(30));
+    }
+    private void linesChecker(){
+        int count = 0;
+        try {
+            FileReader fr = new FileReader(filename);
+            BufferedReader br = new BufferedReader(fr);
+            while(br.readLine() != null)
+                ++count;
+            br.close();
+            fr.close();
+        }catch (IOException e){
+            System.out.println("Can't open \"Encryption.txt\" file");
+        }
+        if(count >= 10){
+            try{
+                PrintWriter pw = new PrintWriter(filename);
+                pw.println("");
+                pw.close();
+            }catch (IOException e){
+                System.out.println("Can't open file to delete its content");
+            }
+        }
     }
 }
